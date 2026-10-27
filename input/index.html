@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Input Penduduk</title>
+</head>
+<body>
+
+    <h2>Form Input Data Penduduk</h2>
+
+    <form action="input.php" method="post"
+          onsubmit="return validateForm()">
+
+        <label for="kecamatan">Kecamatan:</label><br>
+        <input type="text" id="kecamatan" name="kecamatan"
+               required maxlength="100">
+        <br><br>
+
+        <label for="longitude">Longitude:</label><br>
+        <input type="number" id="longitude" name="longitude"
+               step="any" min="-180" max="180" required>
+        <br><br>
+
+        <label for="latitude">Latitude:</label><br>
+        <input type="number" id="latitude" name="latitude"
+               step="any" min="-90" max="90" required>
+        <br><br>
+
+        <label for="luas">Luas (km²):</label><br>
+        <input type="number" id="luas" name="luas"
+               step="any" min="0.01" required>
+        <br><br>
+
+        <label for="jumlah_penduduk">Jumlah Penduduk:</label><br>
+        <input type="number" id="jumlah_penduduk"
+               name="jumlah_penduduk" min="1" step="1" required>
+        <br><br>
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+
+    </form>
+
+    <p id="informasi"></p>
+
+    <p><a href="../index.php">Kembali ke Data Penduduk</a></p>
+
+    <script>
+        function validateForm() {
+            const kecamatan =
+                document.getElementById("kecamatan").value.trim();
+
+            const longitude =
+                document.getElementById("longitude").value;
+
+            const latitude =
+                document.getElementById("latitude").value;
+
+            const luas =
+                document.getElementById("luas").value;
+
+            const jumlah =
+                document.getElementById("jumlah_penduduk").value;
+
+            const informasi =
+                document.getElementById("informasi");
+
+            informasi.textContent = "";
+
+            if (kecamatan === "") {
+                informasi.textContent =
+                    "Nama kecamatan harus diisi.";
+                return false;
+            }
+
+            if (longitude === "" ||
+                Number(longitude) < -180 ||
+                Number(longitude) > 180) {
+                informasi.textContent =
+                    "Longitude harus berada pada rentang -180 sampai 180.";
+                return false;
+            }
+
+            if (latitude === "" ||
+                Number(latitude) < -90 ||
+                Number(latitude) > 90) {
+                informasi.textContent =
+                    "Latitude harus berada pada rentang -90 sampai 90.";
+                return false;
+            }
+
+            if (luas === "" || !Number.isFinite(Number(luas)) ||
+                Number(luas) <= 0) {
+                informasi.textContent =
+                    "Luas harus berupa angka lebih dari 0.";
+                return false;
+            }
+
+            if (jumlah === "" ||
+                !Number.isInteger(Number(jumlah)) ||
+                Number(jumlah) <= 0) {
+                informasi.textContent =
+                    "Jumlah penduduk harus berupa bilangan bulat positif.";
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>
